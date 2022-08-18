@@ -8,7 +8,7 @@ const Movements = () => {
   return (
     <>
       <div className="movements">
-        {sorted &&
+        {!sorted &&
           currentAccount.movements
             .map((movementAmount, index) => (
               <MovementItem
@@ -18,7 +18,7 @@ const Movements = () => {
               />
             ))
             .reverse()}
-        {!sorted &&
+        {sorted &&
           currentAccount.movements.map((movementAmount, index) => (
             <MovementItem
               key={index}

@@ -1,18 +1,19 @@
 import React, { useContext } from "react";
 import { Formik } from "formik";
 import Logo from "../assets/images/logo.png";
-import "../styles/Header.css";
+import useGetUsers from "../hooks/useGetUsers";
 import AppContext from "../context/AppContext";
+import "../styles/Header.css";
 
 const Header = () => {
   const {
-    accounts,
     currentAccount,
     handleUser,
     handleSubmitted,
     submitted,
     createUserName,
   } = useContext(AppContext);
+  const { accounts } = useGetUsers();
 
   return (
     <nav>

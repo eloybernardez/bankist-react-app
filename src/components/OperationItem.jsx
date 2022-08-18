@@ -3,7 +3,7 @@ import { Formik, Form, Field } from "formik";
 import { useContext } from "react";
 import AppContext from "../context/AppContext";
 import "../styles/OperationItem.css";
-import { useEffect } from "react";
+import useGetUsers from "../hooks/useGetUsers";
 
 function validateAmount(value) {
   let error;
@@ -29,28 +29,17 @@ function validateUsername(userValue, value) {
   return error;
 }
 
-const transfer = (amount, fromAccount, toAccount) => {
-  if (
-    amount > 0 &&
-    toAccount &&
-    fromAccount.balance >= amount &&
-    toAccount?.username !== fromAccount.username
-  ) {
-    // Doing the transfer
-    fromAccount.movements.push(-amount);
-    toAccount.movements.push(amount);
-
-    // Add transfer date
-    fromAccount.movementsDates.push(new Date().toISOString());
-    toAccount.movementsDates.push(new Date().toISOString());
-  }
-};
-
 const OperationItem = ({ type }) => {
-  const { accounts, currentAccount, createUserName, fullBalance } =
+  const [transferAccount, setTransferAccount] = React.useState({});
+  const { currentAccount, createUserName, handleUser, fullBalance } =
     useContext(AppContext);
+  const { accounts, setAccounts } = useGetUsers();
 
-  let transferAccount;
+  const handleTransferUser = (newUser) => {
+    setTransferAccount(newUser);
+  };
+
+  let newCurrentAccount;
 
   if (type === "transfer") {
     return (
@@ -66,12 +55,14 @@ const OperationItem = ({ type }) => {
             validate={(values) => {
               const errors = {};
 
-              transferAccount = accounts.find((account) => {
-                return (
-                  createUserName(account) === values.username &&
-                  createUserName(account) !== createUserName(currentAccount)
-                );
-              });
+              handleTransferUser(
+                accounts.find((account) => {
+                  return (
+                    createUserName(account) === values.username &&
+                    createUserName(account) !== createUserName(currentAccount)
+                  );
+                })
+              );
 
               if (!values.username) {
                 errors.username = "Required";
@@ -92,22 +83,34 @@ const OperationItem = ({ type }) => {
 
               return errors;
             }}
-            onSubmit={(values) => {
-              transferAccount = accounts.find((account) => {
-                return (
-                  createUserName(account) === values.username &&
-                  createUserName(account) !== createUserName(currentAccount)
-                );
+            onSubmit={(values, { resetForm }) => {
+              // form handler
+              newCurrentAccount = currentAccount;
+              const newTransferAccount = transferAccount;
+
+              newCurrentAccount.movements.push(-Number(values.amount));
+              newCurrentAccount.movementsDates.push(new Date().toISOString());
+              newTransferAccount.movements.push(Number(values.amount));
+              newTransferAccount.movementsDates.push(new Date().toISOString());
+
+              // Doing the transfer and updating the accounts
+
+              handleUser({
+                ...currentAccount,
+                movements: newCurrentAccount.movements,
+                movementsDates: newCurrentAccount.movementsDates,
               });
 
-              // Doing the transfer
-              transferAccount.movements.push(Number(values.amount));
-              currentAccount.movements.push(-Number(values.amount));
+              handleTransferUser({
+                ...transferAccount,
+                movements: newTransferAccount.movements,
+                movementsDates: newTransferAccount.movementsDates,
+              });
 
-              // Add transfer date
-              transferAccount.movementsDates.push(new Date().toISOString());
-              currentAccount.movementsDates.push(new Date().toISOString());
+              // Reset form
+              resetForm();
 
+              // Communicate to the user that the transfer has been done
               alert(
                 `You transfered ${values.amount} to ${transferAccount.owner}`
               );
@@ -162,12 +165,30 @@ const OperationItem = ({ type }) => {
                 errors.amount = "Required";
               } else if (Number(values.amount) < 0) {
                 errors.amount = validateAmount(Number(values.amount));
+              } else if (
+                !currentAccount.movements.some(
+                  (mov) => mov >= Number(values.amount) * 0.1
+                )
+              ) {
+                errors.amount = "You need to have at least 10% of your balance";
               }
 
               return errors;
             }}
             onSubmit={(values) => {
-              alert(`You received ${values.amount}.`);
+              newCurrentAccount = currentAccount;
+              setTimeout(() => {
+                newCurrentAccount.movements.push(Number(values.amount));
+
+                newCurrentAccount.movementsDates.push(new Date().toISOString());
+                handleUser({
+                  ...currentAccount,
+                  movements: newCurrentAccount.movements,
+                  movementsDates: newCurrentAccount.movementsDates,
+                });
+
+                alert(`You received ${values.amount}.`);
+              }, 3000);
             }}
           >
             {({ errors, touched }) => (
@@ -221,9 +242,20 @@ const OperationItem = ({ type }) => {
 
               return errors;
             }}
-            onSubmit={(values) => {
-              alert(`You closed your account.`);
+            onSubmit={(values, { resetForm }) => {
+              const index = accounts.findIndex(
+                (account) => createUserName(account) === values.username
+              );
+
               // Logout
+              const newAccounts = accounts;
+              newAccounts.splice(index, 1);
+              console.log(newAccounts);
+
+              setAccounts(newAccounts);
+              alert(`You closed your account.`);
+
+              resetForm();
             }}
           >
             {({ errors, touched }) => (
