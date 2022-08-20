@@ -2,8 +2,8 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import { useContext } from "react";
 import AppContext from "../context/AppContext";
+import AccountsContext from "../context/AccountsContext";
 import "../styles/OperationItem.css";
-import useGetUsers from "../hooks/useGetUsers";
 
 function validateAmount(value) {
   let error;
@@ -29,11 +29,11 @@ function validateUsername(userValue, value) {
   return error;
 }
 
-const OperationItem = ({ type }) => {
+const OperationItem = ({ type, handleSubmitted }) => {
   const [transferAccount, setTransferAccount] = React.useState({});
   const { currentAccount, createUserName, handleUser, fullBalance } =
     useContext(AppContext);
-  const { accounts, setAccounts } = useGetUsers();
+  const { accounts, handleAccounts } = useContext(AccountsContext);
 
   const handleTransferUser = (newUser) => {
     setTransferAccount(newUser);
@@ -243,17 +243,22 @@ const OperationItem = ({ type }) => {
               return errors;
             }}
             onSubmit={(values, { resetForm }) => {
-              const index = accounts.findIndex(
-                (account) => createUserName(account) === values.username
+              const finalAccounts = accounts.filter(
+                (account) => createUserName(account) !== values.username
               );
+              console.log(finalAccounts);
+              console.log(`Old accounts`, accounts);
 
               // Logout
-              const newAccounts = accounts;
-              newAccounts.splice(index, 1);
-              console.log(newAccounts);
+              handleUser({});
+              handleSubmitted();
 
-              setAccounts(newAccounts);
-              alert(`You closed your account.`);
+              // Eliminate account
+              handleAccounts([...finalAccounts]);
+
+              console.log(`New accounts`, accounts);
+
+              // alert(`You closed your account.`);
 
               resetForm();
             }}

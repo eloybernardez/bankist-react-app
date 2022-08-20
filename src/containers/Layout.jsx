@@ -5,21 +5,26 @@ import Operations from "../containers/Operations";
 import Balance from "../components/Balance";
 import Summary from "../components/Summary";
 import Timer from "../components/Timer";
+import OperationItem from "../components/OperationItem";
 import AppContext from "../context/AppContext";
 import "../styles/Layout.css";
 
 const Layout = () => {
-  const { submitted } = React.useContext(AppContext);
+  const { submitted, handleSubmitted } = React.useContext(AppContext);
   return (
     <>
-      <Header />
+      <Header submitted={submitted} handleSubmitted={handleSubmitted} />
       <main className="app">
         {submitted && (
           <>
             <Balance />
             <Movements />
             <Summary />
-            <Operations />
+            <Operations
+              renderMov={(type) => (
+                <OperationItem type={type} handleSubmitted={handleSubmitted} />
+              )}
+            />
             {/* <Timer /> */}
           </>
         )}

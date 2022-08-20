@@ -12,7 +12,7 @@ const useInitialState = () => {
   };
 
   const handleSorted = () => {
-    setSorted(!sorted);
+    setSorted((sorted) => !sorted);
   };
 
   const handleTime = () => {
@@ -20,7 +20,7 @@ const useInitialState = () => {
   };
 
   const handleSubmitted = () => {
-    setSubmitted(true);
+    setSubmitted((submitted) => !submitted);
   };
 
   const formatCur = function (value, locale, currency) {

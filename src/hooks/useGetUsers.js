@@ -39,10 +39,16 @@ const account2 = {
   locale: "en-US",
 };
 
-const useGetUsers = () => {
-  const [accounts, setAccounts] = React.useState([account1, account2]);
+const initialAccounts = [account1, account2];
 
-  return { accounts, setAccounts };
+const useGetUsers = () => {
+  const [accounts, setAccounts] = React.useState(initialAccounts);
+
+  const handleAccounts = (newAccounts) => {
+    setAccounts(newAccounts);
+  };
+
+  return { accounts, handleAccounts };
 };
 
 export default useGetUsers;

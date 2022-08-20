@@ -1,19 +1,21 @@
 import React, { useContext } from "react";
 import { Formik } from "formik";
 import Logo from "../assets/images/logo.png";
-import useGetUsers from "../hooks/useGetUsers";
+import AccountsContext from "../context/AccountsContext";
 import AppContext from "../context/AppContext";
 import "../styles/Header.css";
 
-const Header = () => {
-  const {
-    currentAccount,
-    handleUser,
-    handleSubmitted,
-    submitted,
-    createUserName,
-  } = useContext(AppContext);
-  const { accounts } = useGetUsers();
+const Header = ({ submitted, handleSubmitted }) => {
+  const { currentAccount, handleUser, createUserName } = useContext(AppContext);
+  const { accounts } = useContext(AccountsContext);
+
+  const correctUser = (acc) => {
+    return accounts.find(
+      (account) =>
+        createUserName(account) === acc.user &&
+        Number(acc.password) === account.pin
+    );
+  };
 
   return (
     <nav>
@@ -29,29 +31,17 @@ const Header = () => {
           const errors = {};
           if (!values.user) {
             errors.user = "Required";
-          } else if (
-            !accounts.find(
-              (account) =>
-                createUserName(account) === values.user &&
-                Number(values.password) === account.pin
-            )
-          ) {
+          } else if (!correctUser(values)) {
             errors.user = "Invalid user or password";
           }
 
           return errors;
         }}
         onSubmit={(values, { setSubmitting, resetForm }) => {
-          handleUser(
-            accounts.find(
-              (account) =>
-                createUserName(account) === values.user &&
-                Number(values.password) === account.pin
-            )
-          );
+          handleUser(correctUser(values));
 
           setSubmitting(false);
-          handleSubmitted(true);
+          handleSubmitted();
           resetForm();
         }}
       >
