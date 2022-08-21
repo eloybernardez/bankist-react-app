@@ -2,14 +2,14 @@
 
 An app for basic bank operations (transfer, loan and close account).
 
--HTML
--CSS
--Javascript
--Internationalization API
--React
--Formik
+- HTML
+- CSS
+- Javascript
+- Internationalization API
+- React
+- Formik
 
-**How to test it?
+* How to test it?
 You can use to login:
 
 Username: eb
