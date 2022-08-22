@@ -76,14 +76,18 @@ h2 {
   cursor: pointer;
   transition: all 0.3s;
 }
-.form__btn--transfer {
+/* .form__btn--transfer {
   background-image: white;
 }
 
 .form__btn--loan {
   background-image: white;
-}
+} */
 
+.form-button:hover {
+  outline: none;
+  background-color: #777;
+}
 .form__btn:focus {
   outline: none;
   background-color: #9be15d;
@@ -97,6 +101,7 @@ h2 {
   .operation {
     padding: 2rem;
     max-width: 80%;
+    min-width: 288px;
   }
 
   .operation--loan {

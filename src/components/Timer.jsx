@@ -4,34 +4,52 @@ import AppContext from "../context/AppContext";
 
 import "../styles/Timer.css";
 
-const Timer = () => {
-  const { time, handleTime } = useContext(AppContext);
+const Timer = ({ time, setTime }) => {
+  const { handleUser, handleSubmitted } = useContext(AppContext);
 
-  const startLogOutTimer = function () {
-    const tick = function () {
-      // When 0 seconds, stop timer and log out user
-      if (time === 0) {
-        console.log("Logging out user...");
-        // labelWelcome.textContent = "Log in to get started";
-        // containerApp.style.opacity = 0;
-      }
-
-      // Decrease 1s
-      handleTime();
-    };
-    const min = String(Math.trunc(time / 60)).padStart(2, 0);
-    const sec = String(time % 60).padStart(2, 0);
-    // Call the timer every second
-    tick();
-
-    return `${min}:${sec}`;
+  const handleTime = (time) => {
+    setTime(time - 1);
   };
+
+  let timer;
+  const initialTime = 120;
+
+  React.useEffect(() => {
+    // When 0 seconds, stop timer and log out user
+    if (time === 0) {
+      // Change account
+      handleUser({});
+
+      // Log out user
+      handleSubmitted();
+    }
+    // Decrease 1s
+    setTimeout(() => {
+      if (time <= 0) {
+        // Reset timer
+        handleTime(initialTime);
+      } else if (time > 0) {
+        // Continue countdown...
+        handleTime(time);
+      }
+    }, 1000);
+  }, [time, handleTime, handleUser, handleSubmitted]);
+
+  const min = String(Math.trunc(time / 60)).padStart(2, 0);
+  const sec = String(time % 60).padStart(2, 0);
+
+  // Create time string
+  timer = `${min}:${sec}`;
 
   return (
     <>
       <p className="logout-timer">
         You will be logged out in{" "}
-        <span className="timer">{startLogOutTimer()}</span>
+        <span
+          className={`${time < (initialTime * 1) / 10 ? "timer-end" : "timer"}`}
+        >
+          {timer}
+        </span>
       </p>
     </>
   );

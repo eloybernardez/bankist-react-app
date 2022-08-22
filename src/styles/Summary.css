@@ -1,8 +1,8 @@
 .summary {
   /* display: flex; */
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-auto-rows: auto;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   place-items: center;
   justify-content: center;
   flex-wrap: nowrap;
@@ -35,13 +35,15 @@
 }
 
 .btn--sort {
-  /* margin-left: 2.5rem; */
-  /* margin-top: 0.8rem; */
   font-size: 1.1rem;
   border: none;
   background: none;
-  font-weight: 500;
+  font-weight: bold;
   cursor: pointer;
+}
+
+.btn--sort:hover {
+  color: #f5465d;
 }
 
 @media screen and (min-width: 690px) {

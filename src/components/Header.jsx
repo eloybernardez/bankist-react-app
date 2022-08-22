@@ -53,6 +53,7 @@ const Header = ({ submitted, handleSubmitted }) => {
           handleSubmit,
           handleReset,
           isSubmitting,
+          isValid,
         }) => (
           <form className="login" onSubmit={handleSubmit}>
             <div className="login__inputs__container">
@@ -60,7 +61,9 @@ const Header = ({ submitted, handleSubmitted }) => {
                 type="text"
                 name="user"
                 placeholder="user"
-                className="login__input login__input--user"
+                className={`login__input login__input--user ${
+                  touched.user && !isValid ? "login__input--error" : ""
+                } `}
                 onChange={handleChange}
                 value={values.user}
               />
@@ -70,7 +73,9 @@ const Header = ({ submitted, handleSubmitted }) => {
                 name="password"
                 placeholder="PIN"
                 maxLength={4}
-                className="login__input login__input--pin"
+                className={`login__input login__input--pin ${
+                  touched.user && !isValid ? "login__input--error" : ""
+                } `}
                 onChange={handleChange}
                 value={values.password}
               />
@@ -85,7 +90,7 @@ const Header = ({ submitted, handleSubmitted }) => {
               disabled={isSubmitting}
               onReset={handleReset}
             >
-              →
+              ⮞
             </button>
           </form>
         )}

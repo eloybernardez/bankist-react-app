@@ -23,22 +23,28 @@ const Summary = () => {
     .reduce((currentAccount, int) => currentAccount + int, 0);
   return (
     <div className="summary">
-      <p className="summary__label">In</p>
-      <p className="summary__value summary__value--in">
-        {formatCur(incomes, currentAccount.locale, currentAccount.currency)}
-      </p>
-      <p className="summary__label">Out</p>
-      <p className="summary__value summary__value--out">
-        {formatCur(
-          Math.abs(out),
-          currentAccount.locale,
-          currentAccount.currency
-        )}
-      </p>
-      <p className="summary__label">Interest</p>
-      <p className="summary__value summary__value--interest">
-        {formatCur(interest, currentAccount.locale, currentAccount.currency)}
-      </p>
+      <div>
+        <p className="summary__label">In</p>
+        <p className="summary__value summary__value--in">
+          {formatCur(incomes, currentAccount.locale, currentAccount.currency)}
+        </p>
+      </div>
+      <div>
+        <p className="summary__label">Out</p>
+        <p className="summary__value summary__value--out">
+          {formatCur(
+            Math.abs(out),
+            currentAccount.locale,
+            currentAccount.currency
+          )}
+        </p>
+      </div>
+      <div>
+        <p className="summary__label">Interest</p>
+        <p className="summary__value summary__value--interest">
+          {formatCur(interest, currentAccount.locale, currentAccount.currency)}
+        </p>
+      </div>
       <button type="button" className="btn--sort" onClick={handleSorted}>
         ⮁ Sort
       </button>

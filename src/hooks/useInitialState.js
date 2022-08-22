@@ -5,7 +5,6 @@ const useInitialState = () => {
   const [currentAccount, setCurrentAccount] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [sorted, setSorted] = useState(false);
-  const [time, setTime] = React.useState(1200);
 
   const handleUser = (newUser) => {
     setCurrentAccount(newUser);
@@ -13,10 +12,6 @@ const useInitialState = () => {
 
   const handleSorted = () => {
     setSorted((sorted) => !sorted);
-  };
-
-  const handleTime = () => {
-    setTime((time) => time - 1);
   };
 
   const handleSubmitted = () => {
@@ -53,8 +48,6 @@ const useInitialState = () => {
     formatCur,
     sorted,
     handleSorted,
-    time,
-    handleTime,
     createUserName,
     fullBalance,
   };

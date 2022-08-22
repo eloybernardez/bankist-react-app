@@ -1,13 +1,19 @@
 .logout-timer {
   padding: 0 0.3rem;
   margin-top: 1.9rem;
-  text-align: right;
+  text-align: center;
   font-size: 1.25rem;
   grid-row-start: 5;
   order: 4;
 }
 
 .timer {
+  color: black;
+  font-weight: 600;
+}
+
+.timer-end {
+  color: #ff0000;
   font-weight: 600;
 }
 

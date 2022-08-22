@@ -6,3 +6,9 @@
   width: 100%;
   order: 2;
 }
+
+@media screen and (min-width: 1024px) {
+  .movements {
+    width: 100%;
+  }
+}

@@ -10,7 +10,9 @@ import AppContext from "../context/AppContext";
 import "../styles/Layout.css";
 
 const Layout = () => {
+  const [time, setTime] = React.useState(120);
   const { submitted, handleSubmitted } = React.useContext(AppContext);
+
   return (
     <>
       <Header submitted={submitted} handleSubmitted={handleSubmitted} />
@@ -25,7 +27,7 @@ const Layout = () => {
                 <OperationItem type={type} handleSubmitted={handleSubmitted} />
               )}
             />
-            {/* <Timer /> */}
+            <Timer time={time} setTime={setTime} />
           </>
         )}
       </main>

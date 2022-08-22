@@ -34,11 +34,16 @@ nav {
   font-family: inherit;
   text-align: center;
   width: 12rem;
-  margin: 1rem 0 1.5rem;
+  margin: 1rem 1rem 1.5rem;
   border-radius: 10rem;
   color: inherit;
   border: 1px solid #fff;
   transition: all 0.3s;
+}
+
+.login__input--error {
+  border: 1px solid #ff0000;
+  color: #ff0000;
 }
 
 .login__input:focus {
@@ -69,6 +74,7 @@ nav {
   grid-template-columns: auto auto;
   grid-auto-rows: auto;
   place-items: center;
+  margin-top: 5px;
 }
 
 .invalid-form {
@@ -76,7 +82,7 @@ nav {
   color: red;
   font-size: 1.2rem;
   font-weight: bolder;
-  margin-top: 1rem;
+  margin-top: 0;
 }
 
 .login__btn:hover,
@@ -84,7 +90,7 @@ nav {
 .btn--sort:hover,
 .btn--sort:focus {
   outline: none;
-  color: #777;
+  color: white;
 }
 
 @media screen and (min-width: 500px) {
@@ -117,7 +123,7 @@ nav {
 
   .login__btn {
     border-radius: 1rem;
-    margin: 0 2rem 0.5rem 1rem;
+    /* margin: 0 2rem 0.5rem 1rem; */
     width: 25%;
     min-width: 4rem;
     max-width: 6rem;
@@ -143,9 +149,5 @@ nav {
 
   .login__input {
     margin-right: 1rem;
-  }
-
-  .login__btn {
-    background: none;
   }
 }
