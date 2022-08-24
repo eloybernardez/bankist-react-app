@@ -46,7 +46,7 @@ const Summary = () => {
         </p>
       </div>
       <button type="button" className="btn--sort" onClick={handleSorted}>
-        ⮁ Sort
+        Sort ⮁
       </button>
     </div>
   );

@@ -1,8 +1,10 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
 import { useContext } from "react";
 import AppContext from "../context/AppContext";
 import AccountsContext from "../context/AccountsContext";
+import TransferOperation from "./TransferOperation";
+import LoanOperation from "./LoanOperation";
+import CloseAccount from "./CloseAccount";
 import "../styles/OperationItem.css";
 
 function validateAmount(value) {
@@ -29,271 +31,56 @@ function validateUsername(userValue, value) {
   return error;
 }
 
-const OperationItem = ({ type, handleSubmitted }) => {
-  const [transferAccount, setTransferAccount] = React.useState({});
-  const { currentAccount, createUserName, handleUser, fullBalance } =
-    useContext(AppContext);
+const OperationItem = ({ type, handleSubmitted, handleTime }) => {
+  const [showModal, setShowModal] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const { currentAccount, createUserName, handleUser } = useContext(AppContext);
   const { accounts, handleAccounts } = useContext(AccountsContext);
-
-  const handleTransferUser = (newUser) => {
-    setTransferAccount(newUser);
-  };
-
-  let newCurrentAccount;
 
   if (type === "transfer") {
     return (
-      <>
-        <div className={`operation operation--transfer`}>
-          <h2>Transfer money</h2>
-
-          <Formik
-            initialValues={{
-              username: "",
-              amount: "",
-            }}
-            validate={(values) => {
-              const errors = {};
-
-              handleTransferUser(
-                accounts.find((account) => {
-                  return (
-                    createUserName(account) === values.username &&
-                    createUserName(account) !== createUserName(currentAccount)
-                  );
-                })
-              );
-
-              if (!values.username) {
-                errors.username = "Required";
-              } else if (createUserName(transferAccount) !== values.username) {
-                errors.username = validateUsername(
-                  createUserName(transferAccount),
-                  values.username
-                );
-              }
-
-              if (!Number(values.amount)) {
-                errors.amount = "Required";
-              } else if (Number(values.amount) < 0) {
-                errors.amount = validateAmount(Number(values.amount));
-              } else if (Number(values.amount) > fullBalance) {
-                errors.amount = "Amount must be less than your balance";
-              }
-
-              return errors;
-            }}
-            onSubmit={(values, { resetForm }) => {
-              // form handler
-              newCurrentAccount = currentAccount;
-              const newTransferAccount = transferAccount;
-
-              newCurrentAccount.movements.push(-Number(values.amount));
-              newCurrentAccount.movementsDates.push(new Date().toISOString());
-              newTransferAccount.movements.push(Number(values.amount));
-              newTransferAccount.movementsDates.push(new Date().toISOString());
-
-              // Doing the transfer and updating the accounts
-
-              handleUser({
-                ...currentAccount,
-                movements: newCurrentAccount.movements,
-                movementsDates: newCurrentAccount.movementsDates,
-              });
-
-              handleTransferUser({
-                ...transferAccount,
-                movements: newTransferAccount.movements,
-                movementsDates: newTransferAccount.movementsDates,
-              });
-
-              // Reset form
-              resetForm();
-
-              // Communicate to the user that the transfer has been done
-              alert(
-                `You transfered ${values.amount} to ${transferAccount.owner}`
-              );
-            }}
-          >
-            {({ errors, touched }) => (
-              <Form className={`form form--transfer`}>
-                <Field
-                  name="username"
-                  className="form__input form__input--to"
-                  placeholder="User"
-                />
-
-                <Field
-                  name="amount"
-                  className="form__input form__input--amount"
-                  placeholder="Amount"
-                />
-
-                <button
-                  type="submit"
-                  className={`form__btn form__btn--transfer`}
-                >
-                  ⮞
-                </button>
-                <div className="error-message">
-                  {errors.username && touched.username && errors.username}
-                </div>
-
-                {errors.amount && touched.amount && (
-                  <div className="error-message">{errors.amount}</div>
-                )}
-              </Form>
-            )}
-          </Formik>
-        </div>
-      </>
+      <TransferOperation
+        currentAccount={currentAccount}
+        accounts={accounts}
+        createUserName={createUserName}
+        handleUser={handleUser}
+        showModal={showModal}
+        setShowModal={setShowModal}
+        loading={loading}
+        setLoading={setLoading}
+        handleTime={handleTime}
+        validateAmount={validateAmount}
+        validateUsername={validateUsername}
+      />
     );
   } else if (type === "loan") {
     return (
-      <>
-        <div className="operation operation--loan">
-          <h2>Request loan</h2>
-
-          <Formik
-            initialValues={{
-              amount: "",
-            }}
-            validate={(values) => {
-              const errors = {};
-              if (!Number(values.amount)) {
-                errors.amount = "Required";
-              } else if (Number(values.amount) < 0) {
-                errors.amount = validateAmount(Number(values.amount));
-              } else if (
-                !currentAccount.movements.some(
-                  (mov) => mov >= Number(values.amount) * 0.1
-                )
-              ) {
-                errors.amount = "You need to have at least 10% of your balance";
-              }
-
-              return errors;
-            }}
-            onSubmit={(values) => {
-              newCurrentAccount = currentAccount;
-              setTimeout(() => {
-                newCurrentAccount.movements.push(Number(values.amount));
-
-                newCurrentAccount.movementsDates.push(new Date().toISOString());
-                handleUser({
-                  ...currentAccount,
-                  movements: newCurrentAccount.movements,
-                  movementsDates: newCurrentAccount.movementsDates,
-                });
-
-                alert(`You received ${values.amount}.`);
-              }, 3000);
-            }}
-          >
-            {({ errors, touched }) => (
-              <Form className={`form form--loan`}>
-                <Field
-                  name="amount"
-                  className="form__input form__input--loan-amount"
-                  placeholder="Amount"
-                />
-
-                <button type="submit" className={`form__btn form__btn--loan`}>
-                  ⮞
-                </button>
-                {errors.amount && touched.amount && (
-                  <div className="error-message">{errors.amount}</div>
-                )}
-              </Form>
-            )}
-          </Formik>
-        </div>
-      </>
+      <LoanOperation
+        currentAccount={currentAccount}
+        showModal={showModal}
+        setShowModal={setShowModal}
+        loading={loading}
+        setLoading={setLoading}
+        handleTime={handleTime}
+        handleUser={handleUser}
+        validateAmount={validateAmount}
+      />
     );
   } else {
     return (
-      <>
-        <div className="operation operation--close">
-          <h2>Close account</h2>
-
-          <Formik
-            initialValues={{
-              username: "",
-              pin: "",
-            }}
-            validate={(values) => {
-              const errors = {};
-
-              if (!values.username) {
-                errors.username = "Required";
-              } else if (createUserName(currentAccount) !== values.username) {
-                errors.username = validateUsername(
-                  createUserName(currentAccount),
-                  values.username
-                );
-              }
-
-              if (!values.pin) {
-                errors.pin = "Required";
-              } else if (Number(values.pin) !== currentAccount.pin) {
-                errors.pin = validatePin(currentAccount, Number(values.pin));
-              }
-
-              return errors;
-            }}
-            onSubmit={(values, { resetForm }) => {
-              const finalAccounts = accounts.filter(
-                (account) => createUserName(account) !== values.username
-              );
-              console.log(finalAccounts);
-              console.log(`Old accounts`, accounts);
-
-              // Logout
-              handleUser({});
-              handleSubmitted();
-
-              // Eliminate account
-              handleAccounts([...finalAccounts]);
-
-              console.log(`New accounts`, accounts);
-
-              // alert(`You closed your account.`);
-
-              resetForm();
-            }}
-          >
-            {({ errors, touched }) => (
-              <Form className="form form--close">
-                <Field
-                  name="username"
-                  className="form__input form__input--user"
-                  placeholder="User"
-                />
-
-                <Field
-                  name="pin"
-                  type="password"
-                  maxLength={4}
-                  className="form__input form__input--pin"
-                  placeholder="PIN"
-                />
-
-                <button type="submit" className="form__btn form__btn--close">
-                  ⮞
-                </button>
-                <div className="error-message">
-                  {errors.username && touched.username && errors.username}
-                </div>
-
-                {errors.pin && touched.pin && (
-                  <div className="error-message">{errors.pin}</div>
-                )}
-              </Form>
-            )}
-          </Formik>
-        </div>
-      </>
+      <CloseAccount
+        accounts={accounts}
+        currentAccount={currentAccount}
+        createUserName={createUserName}
+        validateUsername={validateUsername}
+        validatePin={validatePin}
+        handleAccounts={handleAccounts}
+        handleUser={handleUser}
+        handleSubmitted={handleSubmitted}
+        handleTime={handleTime}
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
     );
   }
 };

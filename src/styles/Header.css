@@ -11,6 +11,7 @@ nav {
   font-size: 1.9rem;
   font-weight: 500;
   width: fit-content;
+  transition: all 1s ease;
 }
 
 .logo {
@@ -41,9 +42,46 @@ nav {
   transition: all 0.3s;
 }
 
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  10% {
+    transform: translateX(-10px);
+  }
+  20% {
+    transform: translateX(10px);
+  }
+  30% {
+    transform: translateX(-10px);
+  }
+  40% {
+    transform: translateX(10px);
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+  60% {
+    transform: translateX(10px);
+  }
+  70% {
+    transform: translateX(-10px);
+  }
+  80% {
+    transform: translateX(10px);
+  }
+  90% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 .login__input--error {
   border: 1px solid #ff0000;
   color: #ff0000;
+  animation: shake 0.5s;
 }
 
 .login__input:focus {
@@ -64,8 +102,8 @@ nav {
   border-radius: 1rem;
   background-color: rgb(136, 216, 100);
   min-width: 3rem;
-  width: 50%;
-  max-width: 9rem;
+  width: 100%;
+
   padding: 0.4rem 0;
 }
 
@@ -86,9 +124,7 @@ nav {
 }
 
 .login__btn:hover,
-.login__btn:focus,
-.btn--sort:hover,
-.btn--sort:focus {
+.login__btn:focus {
   outline: none;
   color: white;
 }
@@ -109,7 +145,7 @@ nav {
 
   .login {
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: flex-end;
   }
 
   .welcome {
@@ -136,6 +172,10 @@ nav {
     flex-direction: row;
     justify-content: space-between;
     padding: 0 2rem;
+  }
+
+  .welcome {
+    width: 50%;
   }
 
   .logo {

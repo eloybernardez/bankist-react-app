@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 
 const useInitialState = () => {
@@ -27,7 +26,7 @@ const useInitialState = () => {
 
   const createUserName = (account) => {
     return account?.owner
-      .toLowerCase()
+      ?.toLowerCase()
       .split(" ")
       .map((name) => name[0])
       .join("");

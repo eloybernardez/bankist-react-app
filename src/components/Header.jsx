@@ -22,13 +22,14 @@ const Header = ({ submitted, handleSubmitted }) => {
       <p className="welcome">
         {!submitted
           ? "Log in to get started"
-          : `Welcome, ${currentAccount.owner.split(" ")[0]}`}
+          : `Welcome, ${currentAccount.owner.split(" ")[0]} 🤗`}
       </p>
       <img src={Logo} alt="Logo" className="logo" />
       <Formik
         initialValues={{ user: "", password: "" }}
         validate={(values) => {
           const errors = {};
+
           if (!values.user) {
             errors.user = "Required";
           } else if (!correctUser(values)) {

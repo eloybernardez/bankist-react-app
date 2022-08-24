@@ -13,10 +13,15 @@ const Layout = () => {
   const [time, setTime] = React.useState(120);
   const { submitted, handleSubmitted } = React.useContext(AppContext);
 
+  const handleTime = (time) => {
+    setTime(time - 1);
+  };
+
   return (
     <>
       <Header submitted={submitted} handleSubmitted={handleSubmitted} />
-      <main className="app">
+
+      <main className={`app ${submitted ? "show" : "hide"}`}>
         {submitted && (
           <>
             <Balance />
@@ -24,10 +29,15 @@ const Layout = () => {
             <Summary />
             <Operations
               renderMov={(type) => (
-                <OperationItem type={type} handleSubmitted={handleSubmitted} />
+                <OperationItem
+                  type={type}
+                  handleSubmitted={handleSubmitted}
+                  setTime={setTime}
+                  handleTime={handleTime}
+                />
               )}
             />
-            <Timer time={time} setTime={setTime} />
+            <Timer time={time} handleTime={handleTime} />
           </>
         )}
       </main>

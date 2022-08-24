@@ -66,6 +66,54 @@ h2 {
   background-color: rgba(255, 255, 255, 0.6);
 }
 
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  10% {
+    transform: translateX(-10px);
+  }
+  20% {
+    transform: translateX(10px);
+  }
+  30% {
+    transform: translateX(-10px);
+  }
+  40% {
+    transform: translateX(10px);
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+  60% {
+    transform: translateX(10px);
+  }
+  70% {
+    transform: translateX(-10px);
+  }
+  80% {
+    transform: translateX(10px);
+  }
+  90% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.form__input--error {
+  border: 1px solid #ff0000;
+  color: #ff0000;
+  animation: shake 0.5s;
+}
+
+.form__input--close-error {
+  animation: shake 0.5s;
+  border: 1px solid #333;
+  color: #333;
+}
+
 .form__btn {
   font-size: 1.6rem;
   min-width: 2.8rem;
@@ -76,13 +124,6 @@ h2 {
   cursor: pointer;
   transition: all 0.3s;
 }
-/* .form__btn--transfer {
-  background-image: white;
-}
-
-.form__btn--loan {
-  background-image: white;
-} */
 
 .form-button:hover {
   outline: none;

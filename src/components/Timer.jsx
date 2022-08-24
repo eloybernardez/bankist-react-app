@@ -4,12 +4,8 @@ import AppContext from "../context/AppContext";
 
 import "../styles/Timer.css";
 
-const Timer = ({ time, setTime }) => {
+const Timer = ({ time, handleTime }) => {
   const { handleUser, handleSubmitted } = useContext(AppContext);
-
-  const handleTime = (time) => {
-    setTime(time - 1);
-  };
 
   let timer;
   const initialTime = 120;
@@ -24,7 +20,7 @@ const Timer = ({ time, setTime }) => {
       handleSubmitted();
     }
     // Decrease 1s
-    setTimeout(() => {
+    const timeId = setTimeout(() => {
       if (time <= 0) {
         // Reset timer
         handleTime(initialTime);
@@ -33,6 +29,7 @@ const Timer = ({ time, setTime }) => {
         handleTime(time);
       }
     }, 1000);
+    if (time > 0) return () => clearTimeout(timeId);
   }, [time, handleTime, handleUser, handleSubmitted]);
 
   const min = String(Math.trunc(time / 60)).padStart(2, 0);
