@@ -4,6 +4,7 @@ import { Formik, Form, Field } from "formik";
 import AccountsContext from "../context/AccountsContext";
 import AppContext from "../context/AppContext";
 import TimeContext from "../context/TimeContext";
+import { BsArrowRight } from "react-icons/bs";
 
 const CloseAccount = () => {
   const [showModal, setShowModal] = React.useState(false);
@@ -94,7 +95,7 @@ const CloseAccount = () => {
             />
 
             <button type="submit" className="form__btn form__btn--close">
-              ⮕
+              <BsArrowRight className="btn--arrow btn--arrow-header" />
             </button>
             <div className="error-message">
               {errors.username && touched.username && errors.username}

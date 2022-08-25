@@ -4,12 +4,18 @@ import Spinner from "./Spinner";
 import { Formik, Form, Field } from "formik";
 import AccountsContext from "../context/AccountsContext";
 import TimeContext from "../context/TimeContext";
+import { BsArrowRight } from "react-icons/bs";
 
 const LoanOperation = () => {
   const [showModal, setShowModal] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const { currentAccount, handleUser, validateAmount } =
-    useContext(AccountsContext);
+  const {
+    currentAccount,
+    handleUser,
+    validateAmount,
+    accounts,
+    handleAccounts,
+  } = useContext(AccountsContext);
   const { handleTime } = useContext(TimeContext);
 
   let newCurrentAccount;
@@ -45,13 +51,16 @@ const LoanOperation = () => {
           // Loan request
           setTimeout(() => {
             newCurrentAccount.movements.push(Number(values.amount));
-
+            // Update current account
             newCurrentAccount.movementsDates.push(new Date().toISOString());
             handleUser({
               ...currentAccount,
               movements: newCurrentAccount.movements,
               movementsDates: newCurrentAccount.movementsDates,
             });
+
+            // Update Locale Storage
+            handleAccounts([...accounts]);
 
             // Add modal to show that the loan has been confirmed
             setLoading(false);
@@ -77,7 +86,7 @@ const LoanOperation = () => {
             />
 
             <button type="submit" className={`form__btn form__btn--loan`}>
-              ⮕
+              <BsArrowRight className="btn--arrow btn--arrow-header" />
             </button>
 
             <div className="error-message">

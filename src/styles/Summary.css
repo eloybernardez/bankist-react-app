@@ -42,6 +42,19 @@
   cursor: pointer;
 }
 
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.btn--sort__loop:hover {
+  animation: rotate 1s;
+}
+
 .btn--sort:hover {
   color: #f5465d;
 }

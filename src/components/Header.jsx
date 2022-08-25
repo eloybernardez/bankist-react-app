@@ -3,6 +3,7 @@ import { Formik } from "formik";
 import Logo from "../assets/images/logo.png";
 import AppContext from "../context/AppContext";
 import AccountsContext from "../context/AccountsContext";
+import { BsArrowRight } from "react-icons/bs";
 import "../styles/Header.css";
 
 const Header = () => {
@@ -99,7 +100,7 @@ const Header = () => {
               disabled={submitted || isSubmitting}
               onReset={handleReset}
             >
-              ⮕
+              <BsArrowRight className="btn--arrow btn--arrow-header" />
             </button>
           </form>
         )}

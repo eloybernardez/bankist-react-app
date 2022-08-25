@@ -43,7 +43,6 @@ const account2 = {
 const initialAccounts = [account1, account2];
 
 const useGetUsers = () => {
-  // const [accounts, setAccounts] = React.useState(initialAccounts);
   const [accounts, setAccounts] = useLocalStorage("accounts", initialAccounts);
   const [currentAccount, setCurrentAccount] = React.useState({});
 

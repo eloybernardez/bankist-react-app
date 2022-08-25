@@ -4,6 +4,7 @@ import Spinner from "./Spinner";
 import AccountsContext from "../context/AccountsContext";
 import TimeContext from "../context/TimeContext";
 import { Formik, Form, Field } from "formik";
+import { BsArrowRight } from "react-icons/bs";
 
 const TransferOperation = () => {
   const [transferAccount, setTransferAccount] = React.useState({});
@@ -13,6 +14,7 @@ const TransferOperation = () => {
   const {
     fullBalance,
     accounts,
+    handleAccounts,
     currentAccount,
     createUserName,
     handleUser,
@@ -92,6 +94,8 @@ const TransferOperation = () => {
               movementsDates: newTransferAccount.movementsDates,
             });
 
+            handleAccounts([...accounts]);
+
             // Communicate to the user that the transfer has been done
             setLoading(false);
             setShowModal(true);
@@ -128,7 +132,7 @@ const TransferOperation = () => {
               placeholder="Amount"
             />
             <button type="submit" className={`form__btn form__btn--transfer`}>
-              ⮕
+              <BsArrowRight className="btn--arrow btn--arrow-header" />
             </button>
             <div className="error-message">
               {errors.username && touched.username && errors.username}

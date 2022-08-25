@@ -2,6 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import AppContext from "../context/AppContext";
 import AccountsContext from "../context/AccountsContext";
+import { MdLoop } from "react-icons/md";
 import "../styles/Summary.css";
 
 const Summary = () => {
@@ -48,7 +49,7 @@ const Summary = () => {
         </p>
       </div>
       <button type="button" className="btn--sort" onClick={handleSorted}>
-        Sort ⮁
+        <MdLoop size="3rem" className="btn--sort__loop" />
       </button>
     </div>
   );
