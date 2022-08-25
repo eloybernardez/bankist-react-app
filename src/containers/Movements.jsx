@@ -1,10 +1,12 @@
 import React from "react";
 import MovementItem from "../components/MovementItem";
 import AppContext from "../context/AppContext";
+import AccountsContext from "../context/AccountsContext";
 import "../styles/Movements.css";
 
 const Movements = () => {
-  const { currentAccount, sorted } = React.useContext(AppContext);
+  const { sorted } = React.useContext(AppContext);
+  const { currentAccount } = React.useContext(AccountsContext);
   return (
     <>
       <div className="movements">

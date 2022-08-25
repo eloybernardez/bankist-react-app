@@ -5,7 +5,7 @@ const Modal = ({ setShowModal, operationText }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-body">
-        <h3 className="modal-title">Operation done ✅</h3>
+        <h3 className="modal-title">Operation Completed ✅</h3>
         <p className="modal-text">{operationText}</p>
         <button className="modal-button" onClick={() => setShowModal(false)}>
           Close

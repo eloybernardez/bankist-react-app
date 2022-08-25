@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import Modal from "./Modal";
 import Spinner from "./Spinner";
 import { Formik, Form, Field } from "formik";
+import AccountsContext from "../context/AccountsContext";
+import AppContext from "../context/AppContext";
 
 const LoanOperation = ({
-  currentAccount,
   validateAmount,
-  handleTime,
-  handleUser,
   showModal,
   setShowModal,
   loading,
   setLoading,
 }) => {
   let newCurrentAccount;
+  const { currentAccount, handleUser } = useContext(AccountsContext);
+  const { handleTime } = useContext(AppContext);
+
   return (
     <div className="operation operation--loan">
       <h2>Request loan</h2>

@@ -1,7 +1,4 @@
 import React from "react";
-import { useContext } from "react";
-import AppContext from "../context/AppContext";
-import AccountsContext from "../context/AccountsContext";
 import TransferOperation from "./TransferOperation";
 import LoanOperation from "./LoanOperation";
 import CloseAccount from "./CloseAccount";
@@ -31,24 +28,17 @@ function validateUsername(userValue, value) {
   return error;
 }
 
-const OperationItem = ({ type, handleSubmitted, handleTime }) => {
+const OperationItem = ({ type }) => {
   const [showModal, setShowModal] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const { currentAccount, createUserName, handleUser } = useContext(AppContext);
-  const { accounts, handleAccounts } = useContext(AccountsContext);
 
   if (type === "transfer") {
     return (
       <TransferOperation
-        currentAccount={currentAccount}
-        accounts={accounts}
-        createUserName={createUserName}
-        handleUser={handleUser}
         showModal={showModal}
         setShowModal={setShowModal}
         loading={loading}
         setLoading={setLoading}
-        handleTime={handleTime}
         validateAmount={validateAmount}
         validateUsername={validateUsername}
       />
@@ -56,30 +46,20 @@ const OperationItem = ({ type, handleSubmitted, handleTime }) => {
   } else if (type === "loan") {
     return (
       <LoanOperation
-        currentAccount={currentAccount}
         showModal={showModal}
         setShowModal={setShowModal}
         loading={loading}
         setLoading={setLoading}
-        handleTime={handleTime}
-        handleUser={handleUser}
         validateAmount={validateAmount}
       />
     );
   } else {
     return (
       <CloseAccount
-        accounts={accounts}
-        currentAccount={currentAccount}
-        createUserName={createUserName}
-        validateUsername={validateUsername}
-        validatePin={validatePin}
-        handleAccounts={handleAccounts}
-        handleUser={handleUser}
-        handleSubmitted={handleSubmitted}
-        handleTime={handleTime}
         showModal={showModal}
         setShowModal={setShowModal}
+        validateUsername={validateUsername}
+        validatePin={validatePin}
       />
     );
   }

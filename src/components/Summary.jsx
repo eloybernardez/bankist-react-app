@@ -1,10 +1,12 @@
 import React from "react";
 import { useContext } from "react";
 import AppContext from "../context/AppContext";
+import AccountsContext from "../context/AccountsContext";
 import "../styles/Summary.css";
 
 const Summary = () => {
-  const { currentAccount, handleSorted, formatCur } = useContext(AppContext);
+  const { handleSorted, formatCur } = useContext(AppContext);
+  const { currentAccount } = useContext(AccountsContext);
 
   const incomes = currentAccount.movements
     .filter((mov) => mov > 0)

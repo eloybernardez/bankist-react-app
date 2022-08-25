@@ -1,16 +1,14 @@
 import React from "react";
+import AccountsContext from "../context/AccountsContext";
 import AppContext from "../context/AppContext";
 import "../styles/Balance.css";
 
 const Balance = () => {
-  const { currentAccount, formatCur, fullBalance } =
-    React.useContext(AppContext);
+  const { currentAccount, fullBalance } = React.useContext(AccountsContext);
+  const { formatCur } = React.useContext(AppContext);
 
-  const formattedBalance = formatCur(
-    fullBalance,
-    currentAccount.locale,
-    currentAccount.currency
-  );
+  const formattedBalance = (account) =>
+    formatCur(fullBalance, account.locale, account.currency);
 
   const now = new Date();
   const options = {
@@ -21,10 +19,8 @@ const Balance = () => {
     year: "numeric",
   };
 
-  const currentDate = new Intl.DateTimeFormat(
-    currentAccount.locale,
-    options
-  ).format(now);
+  const currentDate = (account) =>
+    new Intl.DateTimeFormat(account.locale, options).format(now);
 
   return (
     <>
@@ -32,10 +28,10 @@ const Balance = () => {
         <div>
           <p className="balance__label">Current balance</p>
           <p className="balance__date">
-            As of <span className="date">{currentDate}</span>
+            As of <span className="date">{currentDate(currentAccount)}</span>
           </p>
         </div>
-        <p className="balance__value">{formattedBalance}</p>
+        <p className="balance__value">{formattedBalance(currentAccount)}</p>
       </div>
     </>
   );

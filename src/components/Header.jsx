@@ -1,13 +1,15 @@
 import React, { useContext } from "react";
 import { Formik } from "formik";
 import Logo from "../assets/images/logo.png";
-import AccountsContext from "../context/AccountsContext";
 import AppContext from "../context/AppContext";
+import AccountsContext from "../context/AccountsContext";
 import "../styles/Header.css";
 
-const Header = ({ submitted, handleSubmitted }) => {
-  const { currentAccount, handleUser, createUserName } = useContext(AppContext);
-  const { accounts } = useContext(AccountsContext);
+const Header = () => {
+  const { accounts, currentAccount, handleUser, createUserName } =
+    useContext(AccountsContext);
+  const { handleSubmitted, submitted } = useContext(AppContext);
+  const [welcome, setWelcome] = React.useState("Log in to get started");
 
   const correctUser = (acc) => {
     return accounts.find(
@@ -17,13 +19,17 @@ const Header = ({ submitted, handleSubmitted }) => {
     );
   };
 
+  React.useEffect(() => {
+    if (submitted) {
+      setWelcome(`Welcome, ${currentAccount.owner.split(" ")[0]} 🤗`);
+    } else {
+      setWelcome("Log in to get started");
+    }
+  }, [submitted]);
+
   return (
     <nav>
-      <p className="welcome">
-        {!submitted
-          ? "Log in to get started"
-          : `Welcome, ${currentAccount.owner.split(" ")[0]} 🤗`}
-      </p>
+      <p className="welcome">{welcome}</p>
       <img src={Logo} alt="Logo" className="logo" />
       <Formik
         initialValues={{ user: "", password: "" }}
@@ -67,6 +73,7 @@ const Header = ({ submitted, handleSubmitted }) => {
                 } `}
                 onChange={handleChange}
                 value={values.user}
+                disabled={submitted}
               />
 
               <input
@@ -79,6 +86,7 @@ const Header = ({ submitted, handleSubmitted }) => {
                 } `}
                 onChange={handleChange}
                 value={values.password}
+                disabled={submitted}
               />
               <div className="invalid-form">
                 {errors.user && touched.user && errors.user}

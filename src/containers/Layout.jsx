@@ -10,16 +10,10 @@ import AppContext from "../context/AppContext";
 import "../styles/Layout.css";
 
 const Layout = () => {
-  const [time, setTime] = React.useState(120);
-  const { submitted, handleSubmitted } = React.useContext(AppContext);
-
-  const handleTime = (time) => {
-    setTime(time - 1);
-  };
-
+  const { submitted } = React.useContext(AppContext);
   return (
     <>
-      <Header submitted={submitted} handleSubmitted={handleSubmitted} />
+      <Header />
 
       <main className={`app ${submitted ? "show" : "hide"}`}>
         {submitted && (
@@ -27,17 +21,13 @@ const Layout = () => {
             <Balance />
             <Movements />
             <Summary />
-            <Operations
-              renderMov={(type) => (
-                <OperationItem
-                  type={type}
-                  handleSubmitted={handleSubmitted}
-                  setTime={setTime}
-                  handleTime={handleTime}
-                />
-              )}
-            />
-            <Timer time={time} handleTime={handleTime} />
+            <Operations>
+              <OperationItem type="transfer" />
+              <OperationItem type="loan" />
+              <OperationItem type="close" />
+            </Operations>
+
+            <Timer />
           </>
         )}
       </main>

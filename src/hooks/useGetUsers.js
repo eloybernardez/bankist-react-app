@@ -43,12 +43,39 @@ const initialAccounts = [account1, account2];
 
 const useGetUsers = () => {
   const [accounts, setAccounts] = React.useState(initialAccounts);
+  const [currentAccount, setCurrentAccount] = React.useState({});
+
+  const handleUser = (newUser) => {
+    setCurrentAccount(newUser);
+  };
 
   const handleAccounts = (newAccounts) => {
     setAccounts(newAccounts);
   };
 
-  return { accounts, handleAccounts };
+  const createUserName = (account) => {
+    return account?.owner
+      ?.toLowerCase()
+      .split(" ")
+      .map((name) => name[0])
+      .join("");
+  };
+
+  const fullBalance = currentAccount.movements?.reduce(
+    (totalAmount, currentMovement) => {
+      return totalAmount + currentMovement;
+    },
+    0
+  );
+
+  return {
+    accounts,
+    currentAccount,
+    handleUser,
+    handleAccounts,
+    createUserName,
+    fullBalance,
+  };
 };
 
 export default useGetUsers;

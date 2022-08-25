@@ -1,24 +1,22 @@
 import React, { useContext } from "react";
 import Modal from "./Modal";
 import Spinner from "./Spinner";
+import AccountsContext from "../context/AccountsContext";
 import AppContext from "../context/AppContext";
 import { Formik, Form, Field } from "formik";
 
 const TransferOperation = ({
-  currentAccount,
-  accounts,
-  createUserName,
-  handleUser,
   showModal,
   setShowModal,
   loading,
   setLoading,
-  handleTime,
   validateAmount,
   validateUsername,
 }) => {
   const [transferAccount, setTransferAccount] = React.useState({});
-  const { fullBalance } = useContext(AppContext);
+  const { fullBalance, accounts, currentAccount, createUserName, handleUser } =
+    useContext(AccountsContext);
+  const { handleTime } = useContext(AppContext);
 
   const handleTransferUser = (newUser) => {
     setTransferAccount(newUser);
@@ -101,6 +99,8 @@ const TransferOperation = ({
             handleTime(120);
           }, 1000);
 
+          console.log("timer");
+
           // Reset form
           resetForm();
         }}
@@ -108,7 +108,7 @@ const TransferOperation = ({
         {({
           errors,
           touched,
-          values,
+
           newTransferAccount = transferAccount,
         }) => (
           <Form className={`form form--transfer`}>

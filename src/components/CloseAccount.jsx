@@ -1,20 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import Modal from "./Modal";
 import { Formik, Form, Field } from "formik";
+import AccountsContext from "../context/AccountsContext";
+import AppContext from "../context/AppContext";
 
 const CloseAccount = ({
-  currentAccount,
-  createUserName,
   validateUsername,
   validatePin,
-  accounts,
-  handleAccounts,
-  handleUser,
-  handleSubmitted,
-  handleTime,
   showModal,
   setShowModal,
 }) => {
+  const {
+    currentAccount,
+    createUserName,
+    accounts,
+    handleAccounts,
+    handleUser,
+  } = useContext(AccountsContext);
+  const { handleSubmitted } = useContext(AppContext);
+
+  const { handleTime } = useContext(AppContext);
+
   return (
     <div className="operation operation--close">
       <h2>Close account</h2>
@@ -49,9 +55,8 @@ const CloseAccount = ({
           const finalAccounts = accounts.filter(
             (account) => createUserName(account) !== values.username
           );
-          // Add modal to show that the account has been closed
 
-          setShowModal(true);
+          // Add modal to show that the account has been closed
 
           // Logout
           handleUser({});

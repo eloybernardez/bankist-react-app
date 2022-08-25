@@ -1,11 +1,13 @@
 import React from "react";
 import { useContext } from "react";
 import AppContext from "../context/AppContext";
+import AccountsContext from "../context/AccountsContext";
 
 import "../styles/Timer.css";
 
-const Timer = ({ time, handleTime }) => {
-  const { handleUser, handleSubmitted } = useContext(AppContext);
+const Timer = () => {
+  const { handleSubmitted, time, handleTime } = useContext(AppContext);
+  const { handleUser } = useContext(AccountsContext);
 
   let timer;
   const initialTime = 120;
@@ -29,6 +31,7 @@ const Timer = ({ time, handleTime }) => {
         handleTime(time);
       }
     }, 1000);
+
     if (time > 0) return () => clearTimeout(timeId);
   }, [time, handleTime, handleUser, handleSubmitted]);
 
@@ -39,8 +42,8 @@ const Timer = ({ time, handleTime }) => {
   timer = `${min}:${sec}`;
 
   return (
-    <>
-      <p className="logout-timer">
+    <div className="logout">
+      <p className="logout__timer">
         You will be logged out in{" "}
         <span
           className={`${time < (initialTime * 1) / 10 ? "timer-end" : "timer"}`}
@@ -48,7 +51,16 @@ const Timer = ({ time, handleTime }) => {
           {timer}
         </span>
       </p>
-    </>
+      <button
+        className="logout__button"
+        onClick={() => {
+          handleSubmitted();
+          handleTime(initialTime);
+        }}
+      >
+        Logout
+      </button>
+    </div>
   );
 };
 
