@@ -12,24 +12,25 @@ const Movements = () => {
     !sorted
       ? currentAccount.movements
           .map((movementAmount, index) => (
-            <MovementItem
-              key={index}
-              currentAccount={currentAccount}
-              movementAmount={movementAmount}
-            />
+            <MovementItem key={index} movementAmount={movementAmount} />
           ))
           .reverse()
       : currentAccount.movements.map((movementAmount, index) => (
-          <MovementItem
-            key={index}
-            currentAccount={currentAccount}
-            movementAmount={movementAmount}
-          />
+          <MovementItem key={index} movementAmount={movementAmount} />
         ));
   return (
     <>
       <div className="movements">
-        <FinalMovements />
+        {!sorted &&
+          currentAccount.movements
+            .map((movementAmount, index) => (
+              <MovementItem key={index} movementAmount={movementAmount} />
+            ))
+            .reverse()}
+        {sorted &&
+          currentAccount.movements.map((movementAmount, index) => (
+            <MovementItem key={index} movementAmount={movementAmount} />
+          ))}
       </div>
     </>
   );
