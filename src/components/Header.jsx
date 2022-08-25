@@ -25,7 +25,7 @@ const Header = () => {
     } else {
       setWelcome("Log in to get started");
     }
-  }, [submitted]);
+  }, [submitted, currentAccount.owner]);
 
   return (
     <nav>
@@ -96,10 +96,10 @@ const Header = () => {
             <button
               type="submit"
               className="login__btn"
-              disabled={isSubmitting}
+              disabled={submitted || isSubmitting}
               onReset={handleReset}
             >
-              ⮞
+              ⮕
             </button>
           </form>
         )}

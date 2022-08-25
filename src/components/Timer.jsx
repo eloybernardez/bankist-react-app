@@ -1,13 +1,14 @@
-import React from "react";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import AppContext from "../context/AppContext";
 import AccountsContext from "../context/AccountsContext";
+import TimeContext from "../context/TimeContext";
 
 import "../styles/Timer.css";
 
 const Timer = () => {
-  const { handleSubmitted, time, handleTime } = useContext(AppContext);
+  const { handleSubmitted } = useContext(AppContext);
   const { handleUser } = useContext(AccountsContext);
+  const { handleTime, time } = useContext(TimeContext);
 
   let timer;
   const initialTime = 120;
@@ -33,7 +34,7 @@ const Timer = () => {
     }, 1000);
 
     if (time > 0) return () => clearTimeout(timeId);
-  }, [time, handleTime, handleUser, handleSubmitted]);
+  }, [time]);
 
   const min = String(Math.trunc(time / 60)).padStart(2, 0);
   const sec = String(time % 60).padStart(2, 0);

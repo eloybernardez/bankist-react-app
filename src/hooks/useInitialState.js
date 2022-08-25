@@ -3,11 +3,6 @@ import React, { useState } from "react";
 const useInitialState = () => {
   const [submitted, setSubmitted] = useState(false);
   const [sorted, setSorted] = useState(false);
-  const [time, setTime] = React.useState(120);
-
-  const handleTime = (time) => {
-    setTime(time - 1);
-  };
 
   const handleSorted = () => {
     setSorted((sorted) => !sorted);
@@ -30,8 +25,6 @@ const useInitialState = () => {
     formatCur,
     sorted,
     handleSorted,
-    time,
-    handleTime,
   };
 };
 

@@ -3,18 +3,16 @@ import Modal from "./Modal";
 import Spinner from "./Spinner";
 import { Formik, Form, Field } from "formik";
 import AccountsContext from "../context/AccountsContext";
-import AppContext from "../context/AppContext";
+import TimeContext from "../context/TimeContext";
 
-const LoanOperation = ({
-  validateAmount,
-  showModal,
-  setShowModal,
-  loading,
-  setLoading,
-}) => {
+const LoanOperation = () => {
+  const [showModal, setShowModal] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const { currentAccount, handleUser, validateAmount } =
+    useContext(AccountsContext);
+  const { handleTime } = useContext(TimeContext);
+
   let newCurrentAccount;
-  const { currentAccount, handleUser } = useContext(AccountsContext);
-  const { handleTime } = useContext(AppContext);
 
   return (
     <div className="operation operation--loan">
@@ -79,7 +77,7 @@ const LoanOperation = ({
             />
 
             <button type="submit" className={`form__btn form__btn--loan`}>
-              ⮞
+              ⮕
             </button>
 
             <div className="error-message">

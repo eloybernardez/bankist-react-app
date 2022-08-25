@@ -2,21 +2,23 @@ import React, { useContext } from "react";
 import Modal from "./Modal";
 import Spinner from "./Spinner";
 import AccountsContext from "../context/AccountsContext";
-import AppContext from "../context/AppContext";
+import TimeContext from "../context/TimeContext";
 import { Formik, Form, Field } from "formik";
 
-const TransferOperation = ({
-  showModal,
-  setShowModal,
-  loading,
-  setLoading,
-  validateAmount,
-  validateUsername,
-}) => {
+const TransferOperation = () => {
   const [transferAccount, setTransferAccount] = React.useState({});
-  const { fullBalance, accounts, currentAccount, createUserName, handleUser } =
-    useContext(AccountsContext);
-  const { handleTime } = useContext(AppContext);
+  const [showModal, setShowModal] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const { handleTime } = useContext(TimeContext);
+  const {
+    fullBalance,
+    accounts,
+    currentAccount,
+    createUserName,
+    handleUser,
+    validateAmount,
+    validateUsername,
+  } = useContext(AccountsContext);
 
   const handleTransferUser = (newUser) => {
     setTransferAccount(newUser);
@@ -24,6 +26,7 @@ const TransferOperation = ({
 
   let newCurrentAccount;
   let newTransferAccount;
+
   return (
     <div className={`operation operation--transfer`}>
       <h2>Transfer money</h2>
@@ -99,8 +102,6 @@ const TransferOperation = ({
             handleTime(120);
           }, 1000);
 
-          console.log("timer");
-
           // Reset form
           resetForm();
         }}
@@ -127,7 +128,7 @@ const TransferOperation = ({
               placeholder="Amount"
             />
             <button type="submit" className={`form__btn form__btn--transfer`}>
-              ⮞
+              ⮕
             </button>
             <div className="error-message">
               {errors.username && touched.username && errors.username}

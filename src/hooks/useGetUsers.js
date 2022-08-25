@@ -1,4 +1,5 @@
 import React from "react";
+import useLocalStorage from "./useLocalStorage";
 const account1 = {
   owner: "Eloy Bernardez",
   movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
@@ -42,7 +43,8 @@ const account2 = {
 const initialAccounts = [account1, account2];
 
 const useGetUsers = () => {
-  const [accounts, setAccounts] = React.useState(initialAccounts);
+  // const [accounts, setAccounts] = React.useState(initialAccounts);
+  const [accounts, setAccounts] = useLocalStorage("accounts", initialAccounts);
   const [currentAccount, setCurrentAccount] = React.useState({});
 
   const handleUser = (newUser) => {
@@ -68,6 +70,30 @@ const useGetUsers = () => {
     0
   );
 
+  function validateAmount(value) {
+    let error;
+    if (value < 0) {
+      error = "Amount must be positive";
+    }
+    return error;
+  }
+
+  function validatePin(user, pin) {
+    let error;
+    if (pin !== user.pin) {
+      error = "Wrong PIN";
+    }
+    return error;
+  }
+
+  function validateUsername(userValue, value) {
+    let error;
+    if (value !== userValue) {
+      error = "Wrong user!";
+    }
+    return error;
+  }
+
   return {
     accounts,
     currentAccount,
@@ -75,6 +101,9 @@ const useGetUsers = () => {
     handleAccounts,
     createUserName,
     fullBalance,
+    validateAmount,
+    validatePin,
+    validateUsername,
   };
 };
 

@@ -7,27 +7,29 @@ import "../styles/Movements.css";
 const Movements = () => {
   const { sorted } = React.useContext(AppContext);
   const { currentAccount } = React.useContext(AccountsContext);
-  return (
-    <>
-      <div className="movements">
-        {!sorted &&
-          currentAccount.movements
-            .map((movementAmount, index) => (
-              <MovementItem
-                key={index}
-                currentAccount={currentAccount}
-                movementAmount={movementAmount}
-              />
-            ))
-            .reverse()}
-        {sorted &&
-          currentAccount.movements.map((movementAmount, index) => (
+
+  const FinalMovements = () =>
+    !sorted
+      ? currentAccount.movements
+          .map((movementAmount, index) => (
             <MovementItem
               key={index}
               currentAccount={currentAccount}
               movementAmount={movementAmount}
             />
-          ))}
+          ))
+          .reverse()
+      : currentAccount.movements.map((movementAmount, index) => (
+          <MovementItem
+            key={index}
+            currentAccount={currentAccount}
+            movementAmount={movementAmount}
+          />
+        ));
+  return (
+    <>
+      <div className="movements">
+        <FinalMovements />
       </div>
     </>
   );

@@ -3,23 +3,21 @@ import Modal from "./Modal";
 import { Formik, Form, Field } from "formik";
 import AccountsContext from "../context/AccountsContext";
 import AppContext from "../context/AppContext";
+import TimeContext from "../context/TimeContext";
 
-const CloseAccount = ({
-  validateUsername,
-  validatePin,
-  showModal,
-  setShowModal,
-}) => {
+const CloseAccount = () => {
+  const [showModal, setShowModal] = React.useState(false);
   const {
     currentAccount,
     createUserName,
     accounts,
     handleAccounts,
     handleUser,
+    validatePin,
+    validateUsername,
   } = useContext(AccountsContext);
   const { handleSubmitted } = useContext(AppContext);
-
-  const { handleTime } = useContext(AppContext);
+  const { handleTime } = useContext(TimeContext);
 
   return (
     <div className="operation operation--close">
@@ -96,7 +94,7 @@ const CloseAccount = ({
             />
 
             <button type="submit" className="form__btn form__btn--close">
-              ⮞
+              ⮕
             </button>
             <div className="error-message">
               {errors.username && touched.username && errors.username}

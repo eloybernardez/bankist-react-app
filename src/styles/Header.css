@@ -103,8 +103,12 @@ nav {
   background-color: rgb(136, 216, 100);
   min-width: 3rem;
   width: 100%;
+  padding: 0.3rem 0;
+}
 
-  padding: 0.4rem 0;
+.login__btn:disabled {
+  background-color: #ccc;
+  color: #bbb;
 }
 
 .login__inputs__container {
