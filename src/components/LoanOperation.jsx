@@ -3,12 +3,11 @@ import Modal from "./Modal";
 import Spinner from "./Spinner";
 import { Formik, Form, Field } from "formik";
 import AccountsContext from "../context/AccountsContext";
+import AppContext from "../context/AppContext";
 import TimeContext from "../context/TimeContext";
 import { BsArrowRight } from "react-icons/bs";
 
 const LoanOperation = () => {
-  const [showModal, setShowModal] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
   const {
     currentAccount,
     handleUser,
@@ -17,7 +16,8 @@ const LoanOperation = () => {
     handleAccounts,
   } = useContext(AccountsContext);
   const { handleTime } = useContext(TimeContext);
-
+  const { loading, setLoading, showModal, setShowModal } =
+    useContext(AppContext);
   let newCurrentAccount;
 
   return (

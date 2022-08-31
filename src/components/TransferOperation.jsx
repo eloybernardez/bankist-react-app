@@ -2,15 +2,16 @@ import React, { useContext } from "react";
 import Modal from "./Modal";
 import Spinner from "./Spinner";
 import AccountsContext from "../context/AccountsContext";
+import AppContext from "../context/AppContext";
 import TimeContext from "../context/TimeContext";
 import { Formik, Form, Field } from "formik";
 import { BsArrowRight } from "react-icons/bs";
 
 const TransferOperation = () => {
   const [transferAccount, setTransferAccount] = React.useState({});
-  const [showModal, setShowModal] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
   const { handleTime } = useContext(TimeContext);
+  const { loading, setLoading, showModal, setShowModal } =
+    useContext(AppContext);
   const {
     fullBalance,
     accounts,

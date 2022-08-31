@@ -7,7 +7,7 @@ import TimeContext from "../context/TimeContext";
 import { BsArrowRight } from "react-icons/bs";
 
 const CloseAccount = () => {
-  const [showModal, setShowModal] = React.useState(false);
+  const { showModal, setShowModal } = useContext(AppContext);
   const {
     currentAccount,
     createUserName,

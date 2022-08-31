@@ -8,16 +8,6 @@ const Movements = () => {
   const { sorted } = React.useContext(AppContext);
   const { currentAccount } = React.useContext(AccountsContext);
 
-  const FinalMovements = () =>
-    !sorted
-      ? currentAccount.movements
-          .map((movementAmount, index) => (
-            <MovementItem key={index} movementAmount={movementAmount} />
-          ))
-          .reverse()
-      : currentAccount.movements.map((movementAmount, index) => (
-          <MovementItem key={index} movementAmount={movementAmount} />
-        ));
   return (
     <>
       <div className="movements">
