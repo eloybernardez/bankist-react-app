@@ -1,12 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import MovementItem from "../components/MovementItem";
-import AppContext from "../context/AppContext";
 import AccountsContext from "../context/AccountsContext";
 import "../styles/Movements.css";
 
-const Movements = () => {
-  const { sorted } = React.useContext(AppContext);
-  const { currentAccount } = React.useContext(AccountsContext);
+const Movements = ({ sorted }) => {
+  const { currentAccount } = useContext(AccountsContext);
 
   return (
     <>

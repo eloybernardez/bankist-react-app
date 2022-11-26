@@ -2,12 +2,11 @@ import React, { useContext } from "react";
 import Modal from "./Modal";
 import { Formik, Form, Field } from "formik";
 import AccountsContext from "../context/AccountsContext";
+import useInitialState from "../hooks/useInitialState";
 import AppContext from "../context/AppContext";
-import TimeContext from "../context/TimeContext";
 import { BsArrowRight } from "react-icons/bs";
 
-const CloseAccount = () => {
-  const { showModal, setShowModal } = useContext(AppContext);
+const CloseAccount = ({ resetTime }) => {
   const {
     currentAccount,
     createUserName,
@@ -17,8 +16,10 @@ const CloseAccount = () => {
     validatePin,
     validateUsername,
   } = useContext(AccountsContext);
+
+  // const { resetTime } = useTime();
+  const { showModal, setShowModal } = useInitialState();
   const { handleSubmitted } = useContext(AppContext);
-  const { handleTime } = useContext(TimeContext);
 
   return (
     <div className="operation operation--close">
@@ -65,9 +66,7 @@ const CloseAccount = () => {
           handleAccounts([...finalAccounts]);
 
           // Reset the timer
-          setTimeout(() => {
-            handleTime(120);
-          }, 1000);
+          resetTime();
 
           resetForm();
         }}
@@ -118,4 +117,6 @@ const CloseAccount = () => {
   );
 };
 
-export default CloseAccount;
+// Add React.memo for prevent unnecessary rerenders while props don't change
+
+export default React.memo(CloseAccount);

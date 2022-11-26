@@ -1,17 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Modal from "./Modal";
 import Spinner from "./Spinner";
 import AccountsContext from "../context/AccountsContext";
-import AppContext from "../context/AppContext";
-import TimeContext from "../context/TimeContext";
+import useInitialState from "../hooks/useInitialState";
 import { Formik, Form, Field } from "formik";
 import { BsArrowRight } from "react-icons/bs";
 
-const TransferOperation = () => {
-  const [transferAccount, setTransferAccount] = React.useState({});
-  const { handleTime } = useContext(TimeContext);
-  const { loading, setLoading, showModal, setShowModal } =
-    useContext(AppContext);
+const TransferOperation = ({ resetTime }) => {
+  const [transferAccount, setTransferAccount] = useState({});
+  const { loading, setLoading, showModal, setShowModal } = useInitialState();
+
   const {
     fullBalance,
     accounts,
@@ -23,9 +21,7 @@ const TransferOperation = () => {
     validateUsername,
   } = useContext(AccountsContext);
 
-  const handleTransferUser = (newUser) => {
-    setTransferAccount(newUser);
-  };
+  const handleTransferUser = (newUser) => setTransferAccount(newUser);
 
   let newCurrentAccount;
   let newTransferAccount;
@@ -40,7 +36,6 @@ const TransferOperation = () => {
         }}
         validate={(values) => {
           const errors = {};
-
           handleTransferUser(
             accounts.find((account) => {
               return (
@@ -49,7 +44,6 @@ const TransferOperation = () => {
               );
             })
           );
-
           if (!values.username) {
             errors.username = "Required";
           } else if (createUserName(transferAccount) !== values.username) {
@@ -103,9 +97,8 @@ const TransferOperation = () => {
           }, 3000);
 
           // Reset the timer
-          setTimeout(() => {
-            handleTime(120);
-          }, 1000);
+
+          resetTime();
 
           // Reset form
           resetForm();
@@ -159,4 +152,5 @@ const TransferOperation = () => {
   );
 };
 
-export default TransferOperation;
+// Add React.memo for prevent unnecessary rerenders while props don't change
+export default React.memo(TransferOperation);

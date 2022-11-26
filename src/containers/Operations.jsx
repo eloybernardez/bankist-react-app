@@ -6,4 +6,4 @@ const Operations = ({ children }) => {
   return <div className="operation-container">{children}</div>;
 };
 
-export default Operations;
+export default React.memo(Operations);

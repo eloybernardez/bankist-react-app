@@ -1,11 +1,11 @@
 import React from "react";
 import { useContext } from "react";
-import AppContext from "../context/AppContext";
+import useInitialState from "../hooks/useInitialState";
 import AccountsContext from "../context/AccountsContext";
 import "../styles/MovementItem.css";
 
 const MovementItem = ({ movementAmount }) => {
-  const { formatCur } = useContext(AppContext);
+  const { formatCur } = useInitialState();
   const { currentAccount } = useContext(AccountsContext);
 
   const movementIndex = currentAccount.movements.findIndex(

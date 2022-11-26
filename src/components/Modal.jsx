@@ -1,8 +1,9 @@
 import React from "react";
+import { createPortal } from "react-dom";
 import "../styles/Modal.css";
 
 const Modal = ({ setShowModal, operationText }) => {
-  return (
+  return createPortal(
     <div className="modal-overlay">
       <div className="modal-body">
         <h3 className="modal-title">Operation Completed ✅</h3>
@@ -11,7 +12,8 @@ const Modal = ({ setShowModal, operationText }) => {
           Close
         </button>
       </div>
-    </div>
+    </div>,
+    document.getElementById("modal-root")
   );
 };
 

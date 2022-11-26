@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import AccountsContext from "../context/AccountsContext";
-import AppContext from "../context/AppContext";
+import useInitialState from "../hooks/useInitialState";
 import "../styles/Balance.css";
 
 const Balance = () => {
-  const { currentAccount, fullBalance } = React.useContext(AccountsContext);
-  const { formatCur } = React.useContext(AppContext);
+  const { currentAccount, fullBalance } = useContext(AccountsContext);
+  const { formatCur } = useInitialState();
 
   const formattedBalance = (account) =>
     formatCur(fullBalance, account.locale, account.currency);

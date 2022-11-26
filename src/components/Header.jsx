@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Formik } from "formik";
 import Logo from "../assets/images/logo.png";
 import AppContext from "../context/AppContext";
@@ -9,8 +9,9 @@ import "../styles/Header.css";
 const Header = () => {
   const { accounts, currentAccount, handleUser, createUserName } =
     useContext(AccountsContext);
-  const { handleSubmitted, submitted } = useContext(AppContext);
-  const [welcome, setWelcome] = React.useState("Log in to get started");
+  const { submitted, setSubmitted } = useContext(AppContext);
+
+  const [welcome, setWelcome] = useState("Log in to get started");
 
   const correctUser = (acc) => {
     return accounts.find(
@@ -20,7 +21,7 @@ const Header = () => {
     );
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (submitted) {
       setWelcome(`Welcome, ${currentAccount.owner.split(" ")[0]} 🤗`);
     } else {
@@ -49,7 +50,7 @@ const Header = () => {
           handleUser(correctUser(values));
 
           setSubmitting(false);
-          handleSubmitted();
+          setSubmitted(true);
           resetForm();
         }}
       >

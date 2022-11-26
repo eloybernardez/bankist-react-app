@@ -1,12 +1,12 @@
 import React from "react";
 import { useContext } from "react";
-import AppContext from "../context/AppContext";
+import useInitialState from "../hooks/useInitialState";
 import AccountsContext from "../context/AccountsContext";
 import { MdLoop } from "react-icons/md";
 import "../styles/Summary.css";
 
-const Summary = () => {
-  const { handleSorted, formatCur } = useContext(AppContext);
+const Summary = ({ handleSorted }) => {
+  const { formatCur } = useInitialState();
   const { currentAccount } = useContext(AccountsContext);
 
   const incomes = currentAccount.movements

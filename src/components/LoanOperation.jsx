@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
 import Modal from "./Modal";
 import Spinner from "./Spinner";
-import { Formik, Form, Field } from "formik";
 import AccountsContext from "../context/AccountsContext";
-import AppContext from "../context/AppContext";
-import TimeContext from "../context/TimeContext";
+import useInitialState from "../hooks/useInitialState";
+import { Formik, Form, Field } from "formik";
 import { BsArrowRight } from "react-icons/bs";
 
-const LoanOperation = () => {
+const LoanOperation = ({ resetTime }) => {
   const {
     currentAccount,
     handleUser,
@@ -15,9 +14,9 @@ const LoanOperation = () => {
     accounts,
     handleAccounts,
   } = useContext(AccountsContext);
-  const { handleTime } = useContext(TimeContext);
-  const { loading, setLoading, showModal, setShowModal } =
-    useContext(AppContext);
+
+  const { loading, setLoading, showModal, setShowModal } = useInitialState();
+
   let newCurrentAccount;
 
   return (
@@ -68,9 +67,7 @@ const LoanOperation = () => {
           }, 3000);
 
           // Reset the timer
-          setTimeout(() => {
-            handleTime(120);
-          }, 1000);
+          resetTime();
 
           resetForm();
         }}
@@ -110,4 +107,6 @@ const LoanOperation = () => {
   );
 };
 
-export default LoanOperation;
+// Add React.memo for prevent unnecessary rerenders while props don't change
+
+export default React.memo(LoanOperation);

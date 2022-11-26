@@ -1,18 +1,9 @@
 import { useState } from "react";
 
 const useInitialState = () => {
-  const [submitted, setSubmitted] = useState(false);
-  const [sorted, setSorted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
-  const handleSorted = () => {
-    setSorted((sorted) => !sorted);
-  };
-
-  const handleSubmitted = () => {
-    setSubmitted((submitted) => !submitted);
-  };
+  const [submitted, setSubmitted] = useState(false);
 
   const formatCur = function (value, locale, currency) {
     return new Intl.NumberFormat(locale, {
@@ -23,10 +14,8 @@ const useInitialState = () => {
 
   return {
     submitted,
-    handleSubmitted,
+    setSubmitted,
     formatCur,
-    sorted,
-    handleSorted,
     loading,
     setLoading,
     showModal,
