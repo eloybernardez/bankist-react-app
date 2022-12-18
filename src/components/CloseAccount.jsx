@@ -4,7 +4,7 @@ import { Formik, Form, Field } from "formik";
 import AccountsContext from "../context/AccountsContext";
 import useInitialState from "../hooks/useInitialState";
 import AppContext from "../context/AppContext";
-import { BsArrowRight } from "react-icons/bs";
+import { HiOutlineArrowCircleRight } from "react-icons/hi/";
 
 const CloseAccount = ({ resetTime }) => {
   const {
@@ -95,7 +95,7 @@ const CloseAccount = ({ resetTime }) => {
 
             <button type="submit" className="form__btn form__btn--close">
               <div className="form__btn__description">
-                <span>Close</span>
+                <HiOutlineArrowCircleRight size="3rem" />
               </div>
             </button>
             <div className="error-message">

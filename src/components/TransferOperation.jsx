@@ -4,7 +4,7 @@ import Spinner from "./Spinner";
 import AccountsContext from "../context/AccountsContext";
 import useInitialState from "../hooks/useInitialState";
 import { Formik, Form, Field } from "formik";
-import { BsArrowRight } from "react-icons/bs";
+import { HiOutlineArrowCircleRight } from "react-icons/hi/";
 
 const TransferOperation = ({ resetTime }) => {
   const [transferAccount, setTransferAccount] = useState({});
@@ -122,7 +122,7 @@ const TransferOperation = ({ resetTime }) => {
             />
             <button type="submit" className={`form__btn form__btn--transfer`}>
               <div className="form__btn__description">
-                <span>Transfer</span>
+                <HiOutlineArrowCircleRight size="3rem" />
               </div>
             </button>
             <div className="error-message">
