@@ -83,7 +83,9 @@ const LoanOperation = ({ resetTime }) => {
             />
 
             <button type="submit" className={`form__btn form__btn--loan`}>
-              <BsArrowRight className="btn--arrow btn--arrow-header" />
+              <div className="form__btn__description">
+                <span>Loan</span>
+              </div>
             </button>
 
             <div className="error-message">

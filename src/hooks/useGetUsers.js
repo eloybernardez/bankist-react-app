@@ -16,12 +16,12 @@ const account1 = {
     "2020-07-28T23:36:17.929Z",
     "2020-08-01T10:51:36.790Z",
   ],
-  currency: "EUR",
+  currency: "ARS",
   locale: "es-AR", // de-DE
 };
 
 const account2 = {
-  owner: "Jessica Davis",
+  owner: "Judith Diaz",
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,

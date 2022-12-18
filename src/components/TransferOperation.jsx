@@ -104,12 +104,7 @@ const TransferOperation = ({ resetTime }) => {
           resetForm();
         }}
       >
-        {({
-          errors,
-          touched,
-
-          newTransferAccount = transferAccount,
-        }) => (
+        {({ errors, touched, newTransferAccount = transferAccount }) => (
           <Form className={`form form--transfer`}>
             <Field
               name="username"
@@ -126,7 +121,9 @@ const TransferOperation = ({ resetTime }) => {
               placeholder="Amount"
             />
             <button type="submit" className={`form__btn form__btn--transfer`}>
-              <BsArrowRight className="btn--arrow btn--arrow-header" />
+              <div className="form__btn__description">
+                <span>Transfer</span>
+              </div>
             </button>
             <div className="error-message">
               {errors.username && touched.username && errors.username}

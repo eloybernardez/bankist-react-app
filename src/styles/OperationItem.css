@@ -126,8 +126,10 @@ h2 {
   font-size: 1.8rem;
   min-width: 2.8rem;
   width: 100%;
-  border: 1px solid #333;
-  background-color: #333;
+  height: auto;
+  min-height: 32px;
+  border: none;
+  background-color: transparent;
   border-radius: 0.7rem;
   cursor: pointer;
   transition: all 0.3s;
@@ -135,12 +137,21 @@ h2 {
 
 .form__btn:hover {
   color: #fff;
-  border: 1px solid #9be15d;
 }
 
 .form__btn:focus {
   outline: none;
-  background-color: #9be15d;
+  color: #fff;
+}
+
+.form__btn__description {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.form__btn__description > span {
+  width: 100%;
 }
 
 .btn--arrow {
@@ -148,7 +159,7 @@ h2 {
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  color: white;
+  color: black;
 }
 
 .error-message {

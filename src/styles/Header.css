@@ -34,7 +34,7 @@ nav {
   font-size: 1.6rem;
   font-family: inherit;
   text-align: center;
-  width: 12rem;
+  width: 100%;
   margin: 1rem 1rem 1.5rem;
   border-radius: 10rem;
   color: inherit;
@@ -103,16 +103,16 @@ nav {
   background-color: rgb(136, 216, 100);
   min-width: 3rem;
   width: 100%;
+  max-width: 264px;
+  height: 38px;
   padding: 0.3rem 0;
+  margin-top: 12px;
 }
 
-.login__btn:hover {
-  background-color: #333;
-  border: 1px solid rgb(136, 216, 100);
-}
-
-.btn--arrow-header:hover {
-  color: rgb(136, 216, 100);
+.login__btn:hover,
+.login__btn:focus {
+  background-color: rgb(68, 209, 8);
+  color: #fff;
 }
 
 .login__btn:disabled {
@@ -121,9 +121,8 @@ nav {
 }
 
 .login__inputs__container {
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-auto-rows: auto;
+  display: flex;
+  flex-direction: column;
   place-items: center;
   margin-top: 5px;
 }
@@ -136,15 +135,12 @@ nav {
   margin-top: 0;
 }
 
-.login__btn:hover,
-.login__btn:focus {
-  outline: none;
-  color: white;
-}
-
 @media screen and (min-width: 500px) {
   .login {
-    flex-direction: row;
+    flex-direction: column;
+  }
+  .login__input {
+    width: 100%;
   }
 }
 
@@ -152,7 +148,6 @@ nav {
   nav {
     flex-direction: row;
     justify-content: space-between;
-
     padding: 0 2rem;
   }
 
@@ -167,15 +162,26 @@ nav {
 
   .login__input {
     margin-right: 1rem;
-    margin-right: 1rem;
   }
 
   .login__btn {
     border-radius: 1rem;
-    /* margin: 0 2rem 0.5rem 1rem; */
+    margin: 5px 2rem 0.5rem 1rem;
     width: 25%;
+    height: 37px;
     min-width: 4rem;
     max-width: 6rem;
+  }
+
+  .login__inputs__container {
+    display: grid;
+    flex-direction: row;
+    grid-template-columns: auto auto;
+    grid-auto-rows: auto;
+  }
+
+  .login__input {
+    width: 12rem;
   }
 }
 
@@ -202,5 +208,6 @@ nav {
 
   .login__input {
     margin-right: 1rem;
+    width: 12rem;
   }
 }

@@ -94,7 +94,9 @@ const CloseAccount = ({ resetTime }) => {
             />
 
             <button type="submit" className="form__btn form__btn--close">
-              <BsArrowRight className="btn--arrow btn--arrow-header" />
+              <div className="form__btn__description">
+                <span>Close</span>
+              </div>
             </button>
             <div className="error-message">
               {errors.username && touched.username && errors.username}
